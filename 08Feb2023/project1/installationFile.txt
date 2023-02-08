@@ -1,0 +1,25 @@
+
+			VUE.JS3
+		===========================
+
+			Installation vue: way1
+			=======================
+1.
+
+
+
+
+		 	Installation vue: way2
+			=========================
+
+1. npm init vue@latest
+2. cd project1
+3. npm install
+4. npm run dev
+5. npm install --global vue-cli
+6. vue --version
+
+
+
+			 Installation vue: way3
+			==========================
