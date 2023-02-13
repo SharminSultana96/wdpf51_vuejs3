@@ -192,6 +192,10 @@ export default {
 <style>
 </style>
 
+4. src->layouts:
+=================
+
+
 ## main.js:
 ===============
 import App from './components/Event1.vue'
