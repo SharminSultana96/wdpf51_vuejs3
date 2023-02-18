@@ -25,7 +25,7 @@
         <hr class="d-sm-none" />
       </div>
       <div class="col-sm-8">
-        <button @click="formDisplay = 'true'" class="btn btn-primary">New Product</button>
+        <button @click="formDisplay = 'true'; isSubmitButton = 'true';" class="btn btn-primary">New Product</button>
           <div v-if="formDisplay">
             {{ JSON.stringify(formValues, null, 2) }}
         <form name="productForm" v-on:submit.prevent="product_submit">
@@ -85,8 +85,11 @@
                   
                   
                 </div>
-                <div class="col-12">
+                <div class="col-12" v-if="isSubmitButton">
                     <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                <div class="col-12" v-if="isUpdateButton">
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>
           </div>
@@ -98,7 +101,7 @@
             {{ post.product_details }}
           </p>
           <button @click="product_delete(post.id)" class="btn btn-danger">Delete{{ post.id }}</button>
-          <button @click="edit_product()" class="btn btn-info">Edit</button>
+          <button @click="edit_product(post); isUpdateButton = true;" class="btn btn-info">Edit</button>
         </div>
       </div>
     </div>
@@ -112,6 +115,8 @@ export default {
       posts: [],
       formDisplay: false, 
       productList: true,
+      isSubmitButton: false,
+      isUpdateButton: false,
       formValues: {
         p_name:'',
         p_details: '',
