@@ -1,0 +1,10 @@
+
+
+
+1. download and move it to htdocs and rename
+2. env configure
+3. composer install
+4. php artisan key:generate
+5. php artisan migrate
+6. php artisan db:seed
+7. php artisan serve
