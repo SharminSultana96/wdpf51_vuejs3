@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
+    <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="/frontend_assets/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/frontend_assets/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="/frontend_assets/css/elegant-icons.css" type="text/css">
@@ -24,6 +25,9 @@
 </head>
 
 <body>
+    <div id="app">
+    {{-- <example-component></example-component> --}}
+
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
@@ -155,7 +159,8 @@
                     <div class="header__cart">
                         <ul>
                             <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                            <li><a href="#"><i class="fa fa-shopping-bag"></i> 
+                            <span><cart/></span></a></li>
                         </ul>
                         <div class="header__cart__price">item: <span>$150.00</span></div>
                     </div>
@@ -276,7 +281,8 @@
                     @foreach($products as $product)
                     <div class="col-lg-3">
                         <div class="categories__item set-bg" data-setbg="{{$product->image_name}}">
-                            <h5><a href="#">{{ $product->name }}Fresh Fruit</a></h5>
+                            <h5><a href="#">{{ $product->name }}</a></h5>
+                            <add-to-cart product-id={{$product->id}}></add-to-cart>
                         </div>
                     </div>
                    @endforeach
@@ -784,6 +790,7 @@
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
+    <script src="{{asset('js/app.js')}}"></script>
     <script src="/frontend_assets/js/jquery-3.3.1.min.js"></script>
     <script src="/frontend_assets/js/bootstrap.min.js"></script>
     <script src="/frontend_assets/js/jquery.nice-select.min.js"></script>
@@ -793,7 +800,7 @@
     <script src="/frontend_assets/js/owl.carousel.min.js"></script>
     <script src="/frontend_assets/js/main.js"></script>
 
-
+</div>
 
 </body>
 

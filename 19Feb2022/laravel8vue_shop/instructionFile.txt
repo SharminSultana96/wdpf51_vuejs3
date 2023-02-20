@@ -18,7 +18,9 @@
 14.npm install
 15.npm run dev
 16.npm install vue
-17.npm install vue-loader
+17.npm install vue-loader // npm install vue-loader --save-dev
+18.npm install vue-template-loader --save-dev
+19.npm run watch
 
 
 
