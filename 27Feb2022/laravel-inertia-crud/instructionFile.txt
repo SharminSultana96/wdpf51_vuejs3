@@ -1,0 +1,175 @@
+
+				vue  +  interia
+			=====================
+1. composer create-project laravel/laravel laravel-inertia-crud
+2. cd laravel-inertia-crud
+3. composer require inertiajs/inertia-laravel
+4. composer require tightenco/ziggy
+
+5. resources/views/app.blade.php=>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Laravel Inertia CRUD</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+    <link href="{{ asset('/css/app.css') }}" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    @routes
+    <script src="{{ asset('/js/app.js') }}" defer></script>
+</head>
+<body>
+    <div class="container">
+        @inertia
+    </div>
+</body>
+</html>
+
+6. php artisan inertia:middleware
+7.  app/Http/Kernel.php=>
+'web' => [
+    // ...
+    \App\Http\Middleware\HandleInertiaRequests::class,
+],
+8. npm install
+9. npm install @inertiajs/inertia @inertiajs/inertia-vue3
+10. npm install vue@next vue-loader@^16.2.0 @vue/compiler-sfc
+11. npm install @inertiajs/progress
+12.  .env=>
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel_inertia_crud
+DB_USERNAME=<DB username>
+DB_PASSWORD=<DB password>
+13. php artisan make:migration create_posts_table
+14. php artisan migrate
+15. app/Http/Controllers/Auth/LoginController.php=>
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
+
+class LoginController extends Controller
+{
+    public function showLoginForm()
+    {
+        return Inertia::render('Auth/Login');   // Vue component
+    }
+    public function authenticate(Request $request)
+    {
+        
+    }
+    public function logout(Request $request)
+    {
+        
+    }
+}
+16. app/Http/Controllers/Auth/RegisterController.php=>
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
+
+class RegisterController extends Controller
+{
+    public function showRegisterForm()
+    {
+        return Inertia::render('Auth/Register');
+    }
+
+    public function register(Request $request)
+    {
+        
+    }
+}
+17. php artisan make:controller PostsController --resource
+18. PostsController.php=>
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Post;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+
+class PostsController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware("auth")->except(["index"]);
+    }
+
+    public function index()
+    {
+        return Inertia::render('Posts/Index', [
+            "posts" => Post::orderBy('id', 'DESC')->paginate(10)
+        ]);
+    }
+
+    public function create()
+    {
+        return Inertia::render('Posts/Create');
+    }
+
+    public function store(Request $request)
+    {
+        
+    }
+
+    public function edit($id)
+    {
+        return Inertia::render('Posts/Edit', [
+            'post' => Post::findOrFail($id)
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        
+    }
+}
+19. routes/web.php=>
+<?php
+
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\PostsController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('showLoginForm')->middleware('guest');
+Route::get('register', [RegisterController::class, 'showRegisterForm'])->name('showRegisterForm')->middleware('guest');
+
+Route::post('login', [LoginController::class, 'authenticate'])->name('login');
+Route::post('register', [RegisterController::class, 'register'])->name('register');
+
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::resource('post', PostsController::class);
+
+Route::redirect('/', 'post');
+20. 

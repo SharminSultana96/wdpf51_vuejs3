@@ -22,6 +22,9 @@
 18.npm install vue-template-loader --save-dev
 19.npm run watch
 
+================= 20 Feburary 2022 ==================
+20. npm i axios
+
 
 
 
